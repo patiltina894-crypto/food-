@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foodie - Food Delivery</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f8f8f8;
+    color: #222;
+}
+
+/* HEADER */
+header {
+    height: 72px;
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 0 7%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: #e23744;
+    margin-right: 35px;
+}
+
+.location {
+    color: #555;
+    font-size: 15px;
+    margin-right: 20px;
+}
+
+.search {
+    flex: 1;
+    max-width: 550px;
+    height: 44px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.search span {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.search input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    font-size: 15px;
+}
+
+.login {
+    margin-left: auto;
+    font-size: 16px;
+    color: #444;
+    cursor: pointer;
+}
+
+/* HERO */
+.hero {
+    min-height: 420px;
+    background:
+        linear-gradient(rgba(20,20,20,.55), rgba(20,20,20,.55)),
+        url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80")
+        center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-content h1 {
+    font-size: 52px;
+    margin-bottom: 15px;
+}
+
+.hero-content p {
+    font-size: 22px;
+    margin-bottom: 25px;
+}
+
+.hero-search {
+    width: 600px;
+    max-width: 90vw;
+    background: white;
+    border-radius: 8px;
+    padding: 16px 20px;
+    color: #777;
+    text-align: left;
+}
+
+/* CATEGORIES */
+.container {
+    width: 86%;
+    max-width: 1200px;
+    margin: 35px auto;
+}
+
+.section-title {
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.categories {
+    display: flex;
+    gap: 25px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.category {
+    min-width: 130px;
+    background: white;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.category:hover {
+    transform: translateY(-6px);
+}
+
+.category img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.category p {
+    margin: 10px 0 15px;
+    font-weight: bold;
+}
+
+/* RESTAURANTS */
+.restaurants {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,.15);
+}
+
+.card-image {
+    height: 190px;
+    position: relative;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.offer {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: #2563eb;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card-content h3 {
+    font-size: 19px;
+    margin-bottom: 7px;
+}
+
+.rating {
+    display: inline-block;
+    background: #24963f;
+    color: white;
+    padding: 4px 7px;
+    border-radius: 5px;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.info {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.order-btn {
+    width: 100%;
+    background: #e23744;
+    color: white;
+    border: none;
+    padding: 11px;
+    border-radius: 6px;
+    margin-top: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.order-btn:hover {
+    background: #c92535;
+}
+
+/* CART */
+.cart {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    background: #e23744;
+    color: white;
+    padding: 15px 22px;
+    border-radius: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.25);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* FOOTER */
+footer {
+    background: #222;
+    color: white;
+    padding: 45px 7%;
+    margin-top: 60px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+footer h2 {
+    color: #e23744;
+    margin-bottom: 12px;
+}
+
+footer p {
+    color: #bbb;
+    margin: 7px 0;
+}
+
+/* MOBILE */
+@media(max-width: 700px) {
+    header {
+        padding: 0 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+        margin-right: 10px;
+    }
+
+    .location {
+        display: none;
+    }
+
+    .login {
+        display: none;
+    }
+
+    .hero-content h1 {
+        font-size: 36px;
+    }
+
+    .hero-content p {
+        font-size: 17px;
+    }
+
+    .container {
+        width: 92%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="logo">foodie</div>
+
+    <div class="location">
+        📍 Mumbai ▼
+    </div>
+
+    <div class="search">
+        <span>🔍</span>
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search for restaurant, cuisine or dish..."
+            onkeyup="searchRestaurants()">
+    </div>
+
+    <div class="login" onclick="login()">
+        Login / Sign Up
+    </div>
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Discover the best food near you</h1>
+        <p>Order delicious food from your favourite restaurants</p>
+
+        <div class="hero-search">
+            🔍 &nbsp; Search for restaurants, dishes and cuisines
+        </div>
+    </div>
+</section>
+
+
+<!-- CATEGORIES -->
+<div class="container">
+
+    <h2 class="section-title">What's on your mind?</h2>
+
+    <div class="categories">
+
+        <div class="category">
+            <img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?w=300">
+            <p>Pizza</p>
+        </div>
+
+        <div class="category">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300">
+            <p>Burger</p>
+        </div>
+
+        <div class="category">
+            <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=300">
+            <p>Pasta</p>
+        </div>
+
+        <div class="category">
+            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300">
+            <p>North Indian</p>
+        </div>
+
+        <div class="category">
+            <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300">
+            <p>Chinese</p>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- RESTAURANTS -->
+<div class="container">
+
+    <h2 class="section-title">Popular restaurants near you</h2>
+
+    <div class="restaurants" id="restaurantList">
+
+        <!-- CARD 1 -->
+        <div class="card" data-name="Pizza Paradise Italian Pizza">
+
+            <div class="card-image">
+                <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800">
+                <span class="offer">50% OFF</span>
+            </div>
+
+            <div class="card-content">
+                <h3>Pizza Paradise</h3>
+                <span class="rating">★ 4.5</span>
+                <p class="info">Italian, Pizza, Fast Food</p>
+                <p class="info">₹250 for two • 25 min</p>
+
+                <button class="order-btn"
+                    onclick="addToCart('Pizza Paradise')">
+                    Add to Cart
+                </button>
+            </div>
+
+        </div>
+
+
+        <!-- CARD 2 -->
+        <div class="card" data-name="Spice Garden Indian">
+
+            <div class="card-image">
+                <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800">
+                <span class="offer">30% OFF</span>
+            </div>
+
+            <div class="card-content">
+                <h3>Spice Garden</h3>
+                <span class="rating">★ 4.3</span>
+                <p class="info">North Indian, Biryani</p>
+                <p class="info">₹400 for two • 30 min</p>
+
+                <button class="order-btn"
+                    onclick="addToCart('Spice Garden')">
+                    Add to Cart
+                </button>
+            </div>
+
+        </div>
+
+
+        <!-- CARD 3 -->
+        <div class="card" data-name="Burger House Burgers">
+
+            <div class="card-image">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800">
+                <span class="offer">20% OFF</span>
+            </div>
+
+            <div class="card-content">
+                <h3>Burger House</h3>
+                <span class="rating">★ 4.6</span>
+                <p class="info">Burgers, American, Fast Food</p>
+                <p class="info">₹300 for two • 20 min</p>
+
+                <button class="order-btn"
+                    onclick="addToCart('Burger House')">
+                    Add to Cart
+                </button>
+            </div>
+
+        </div>
+
+
+        <!-- CARD 4 -->
+        <div class="card" data-name="Dragon Chinese Chinese">
+
+            <div class="card-image">
+                <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=800">
+                <span class="offer">40% OFF</span>
+            </div>
+
+            <div class="card-content">
+                <h3>Dragon Chinese</h3>
+                <span class="rating">★ 4.4</span>
+                <p class="info">Chinese, Asian, Noodles</p>
+                <p class="info">₹350 for two • 35 min</p>
+
+                <button class="order-btn"
+                    onclick="addToCart('Dragon Chinese')">
+                    Add to Cart
+                </button>
+            </div>
+
+        </div>
+
+
+        <!-- CARD 5 -->
+        <div class="card" data-name="Sweet Treats Desserts">
+
+            <div class="card-image">
+                <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800">
+                <span class="offer">25% OFF</span>
+            </div>
+
+            <div class="card-content">
+                <h3>Sweet Treats</h3>
+                <span class="rating">★ 4.7</span>
+                <p class="info">Desserts, Cakes, Ice Cream</p>
+                <p class="info">₹250 for two • 15 min</p>
+
+                <button class="order-btn"
+                    onclick="addToCart('Sweet Treats')">
+                    Add to Cart
+                </button>
+            </div>
+
+        </div>
+
+
+        <!-- CARD 6 -->
+        <div class="card" data-name="South Indian Corner Dosa">
+
+            <div class="card-image">
+                <img src="https://images.unsplash.com/photo-1630383249896-424e482df921?w=800">
+                <span class="offer">35% OFF</span>
+            </div>
+
+            <div class="card-content">
+                <h3>South Indian Corner</h3>
+                <span class="rating">★ 4.5</span>
+                <p class="info">South Indian, Dosa</p>
+                <p class="info">₹220 for two • 20 min</p>
+
+                <button class="order-btn"
+                    onclick="addToCart('South Indian Corner')">
+                    Add to Cart
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<!-- CART BUTTON -->
+<div class="cart" onclick="showCart()">
+    🛒 Cart (<span id="cartCount">0</span>)
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="footer-content">
+
+        <div>
+            <h2>foodie</h2>
+            <p>Discover the best food around you.</p>
+        </div>
+
+        <div>
+            <h3>About</h3>
+            <p>Who We Are</p>
+            <p>Careers</p>
+            <p>Contact Us</p>
+        </div>
+
+        <div>
+            <h3>For Restaurants</h3>
+            <p>Partner With Us</p>
+            <p>Business App</p>
+        </div>
+
+        <div>
+            <h3>Social</h3>
+            <p>Instagram</p>
+            <p>Facebook</p>
+            <p>Twitter</p>
+        </div>
+
+    </div>
+
+    <br>
+    <p style="text-align:center;">© 2026 Foodie. Demo food delivery website.</p>
+
+</footer>
+
+
+<script>
+
+let cart = [];
+
+/* ADD TO CART */
+function addToCart(name) {
+
+    cart.push(name);
+
+    document.getElementById("cartCount").innerText = cart.length;
+
+    alert(name + " added to cart!");
+}
+
+
+/* SHOW CART */
+function showCart() {
+
+    if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+    }
+
+    let message = "🛒 Your Cart\n\n";
+
+    cart.forEach(function(item, index) {
+        message += (index + 1) + ". " + item + "\n";
+    });
+
+    message += "\nTotal items: " + cart.length;
+
+    alert(message);
+}
+
+
+/* SEARCH */
+function searchRestaurants() {
+
+    let search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    let cards =
+        document.querySelectorAll(".card");
+
+    cards.forEach(function(card) {
+
+        let name =
+            card.getAttribute("data-name")
+            .toLowerCase();
+
+        if (name.includes(search)) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+
+    });
+}
+
+
+/* LOGIN */
+function login() {
+    alert("Login / Sign Up page coming soon!");
+}
+
+</script>
+
+</body>
+</html>
